@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="com.bwie.wang.xiaomaipu.my.activity.MainActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_weight="1" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#aeaeae"
+        />
+    <com.yinglan.alphatabs.AlphaTabsIndicator
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_90"
+        android:orientation="horizontal"
+        android:background="@mipmap/rectangle_6_hdpi"
+        >
+        <com.yinglan.alphatabs.AlphaTabView
+            style="@style/buju"
+            app:tabIconNormal="@mipmap/common_tab_btn_home_n_hdpi"
+            app:tabIconSelected="@mipmap/common_tab_btn_home_s"
+            />
+        <com.yinglan.alphatabs.AlphaTabView
+            style="@style/buju"
+            app:tabIconNormal="@mipmap/common_tab_btn_circle_n_hdpi"
+            app:tabIconSelected="@mipmap/common_tab_btn_circle_s_hdpi"
+            />
+        <com.yinglan.alphatabs.AlphaTabView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_80"
+            android:layout_weight="1"
+            android:padding="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            app:tabIconNormal="@mipmap/commom_tab_btn_shopping_cart_n_hdpi"
+            app:textColorNormal="#999999"
+            />
+        <com.yinglan.alphatabs.AlphaTabView
+            style="@style/buju"
+            app:tabIconNormal="@mipmap/common_tab_btn_list_n_hdpi"
+            app:tabIconSelected="@mipmap/common_tab_btn_list_s_hdpi"
+            />
+        <com.yinglan.alphatabs.AlphaTabView
+            style="@style/buju"
+            app:tabIconNormal="@mipmap/common_tab_btn_my_n_hdpi"
+            app:tabIconSelected="@mipmap/common_tab_btn_my_s_hdpi"
+            />
+    </com.yinglan.alphatabs.AlphaTabsIndicator>
+
+</LinearLayout>

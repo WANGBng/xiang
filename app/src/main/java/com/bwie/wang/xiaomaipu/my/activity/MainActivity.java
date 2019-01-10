@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isNetConnection() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        assert manager != null;
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo == null) {
             Toast.makeText(this,"我没网络",Toast.LENGTH_SHORT).show();
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         List<Fragment> fragments = new ArrayList<>();
         String[] titles = {"首页", "圈子", "购物车", "订单", "我的"};
 
-        public MainAdapter(FragmentManager fm) {
+          MainAdapter(FragmentManager fm) {
             super(fm);
             fragments.add(HomeFragment.newInstance(titles[0]));
             fragments.add(CircleFragment.newInstance(titles[1]));

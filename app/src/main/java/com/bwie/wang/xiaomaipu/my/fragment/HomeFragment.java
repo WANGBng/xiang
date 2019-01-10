@@ -1,6 +1,7 @@
 package com.bwie.wang.xiaomaipu.my.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +12,16 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
@@ -55,12 +60,11 @@ import butterknife.Unbinder;
 public class HomeFragment extends Fragment implements HomeView, NavView {
     public static final String BUNDLE_TITLE = "title";
     boolean isCheck = true;
-    @BindView(R.id.nav_childs_rec)
-    RecyclerView navChildsRec;
-    @BindView(R.id.home_all)
-    LinearLayout homeAll;
-    @BindView(R.id.nav_childs_linear)
-    LinearLayout navChildsLinear;
+    @BindView(R.id.re_all)
+    RelativeLayout reAll;
+    @BindView(R.id.re_recycler_view_re)
+    RelativeLayout reRecyclerViewRe;
+
     //点击隐藏显示
     private boolean isVisible = false;
     View view;
@@ -100,13 +104,25 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
     Home_Magic_Line_Adapter home_magic_line_adapter;
     Home_Quality_Line_Adapter home_quality_line_adapter;
 
+    //    一级导航的rec
     @BindView(R.id.linear_rec)
     RecyclerView linearRec;
+
+    //er级导航的rec
     @BindView(R.id.linear_child_rec)
     RecyclerView linearChildRec;
+    //首页导航的布局
     @BindView(R.id.nav_linear)
     LinearLayout navLinear;
-
+    //    home所有的布局,导航除外
+    @BindView(R.id.home_all)
+    LinearLayout homeAll;
+    //    导航孩子的孩子的商品的REC
+    @BindView(R.id.nav_childs_rec)
+    RecyclerView navChildsRec;
+    //    导航孩子的孩子的商品的布局
+    @BindView(R.id.nav_childs_linear)
+    LinearLayout navChildsLinear;
 
     NavAdapter navAdapter;
     NavChildAdapter navChildAdapter;
@@ -130,7 +146,9 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
                 handler.sendEmptyMessageDelayed(0, 1000);
             }
         }
-    }; //上面是轮播图的handler
+    };//上面是轮播图的handler
+
+    boolean isBoolen = true;
 
     @Nullable
     @Override
@@ -156,8 +174,11 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         navPresenter.getNavChildsBea("1001004002");
 
         unbinder = ButterKnife.bind(this, view);
+
+
         return view;
     }
+
 
     public static HomeFragment newInstance(String title) {
         Bundle bundle = new Bundle();
@@ -170,7 +191,7 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
     /**
      * 首页的点击事件
      */
-    @OnClick({R.id.menu_n, R.id.search_n, R.id.re_, R.id.mo_, R.id.pin_})
+    @OnClick({R.id.menu_n, R.id.search_n, R.id.re_, R.id.mo_, R.id.pin_, R.id.re_all})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.menu_n:
@@ -200,22 +221,54 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
 
                 break;
             case R.id.re_:
-                Toast.makeText(getActivity(), "热线新品更多_", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "热线新品更多", Toast.LENGTH_SHORT).show();
+                // if (!isVisible) {
+                //     homeAll.setVisibility(View.GONE);
+//                    navChildsLinear.setVisibility(View.VISIBLE);
+                //      Toast.makeText(getActivity(), "欢迎来到热线新品更多", Toast.LENGTH_SHORT).show();
 
+                // }
                 break;
             case R.id.mo_:
                 Toast.makeText(getActivity(), "魔力时尚更多", Toast.LENGTH_SHORT).show();
+//                if (!isVisible) {
+//                    isVisible = true;
+//                    homeAll.setVisibility(View.GONE);
+//                    navChildsLinear.setVisibility(View.VISIBLE);
+//                    Toast.makeText(getActivity(), "欢迎来到魔力时尚更多", Toast.LENGTH_SHORT).show();
 
+                //  }
                 break;
             case R.id.pin_:
                 Toast.makeText(getActivity(), "品质生活更多", Toast.LENGTH_SHORT).show();
-
+//                if (!isVisible) {
+//                    isVisible = true;
+//                    homeAll.setVisibility(View.GONE);
+//                    navChildsLinear.setVisibility(View.VISIBLE);
+//                    Toast.makeText(getActivity(), "欢迎来到品质生活更多", Toast.LENGTH_SHORT).show();
+//
+//                }
+                break;
+            case R.id.re_all:
+//                Toast.makeText(getActivity(), "品质生活更多", Toast.LENGTH_SHORT).show();
+//                if (!isVisible) {
+//                    isVisible = true;
+//                    homeAll.setVisibility(View.GONE);
+//                    navChildsLinear.setVisibility(View.VISIBLE);
+//                    Toast.makeText(getActivity(), "欢迎来到品质生活更多", Toast.LENGTH_SHORT).show();
+//
+//                }
+                // 影藏软键盘
+                InputMethodManager imm = (InputMethodManager) getActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edSou.getWindowToken(), 0);
                 break;
             default:
                 break;
         }
     }
 
+    //轮播图
     @Override
     public void onHomeBannerSuccess(HomeBannerBean bannerBean) {
         //轮播图
@@ -312,12 +365,11 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         reRecyclerView.setAdapter(home_hot_line_adapter);
 
 
-
         // 3 columns
         int spanCount = 3;
         // 50px
         int spacing = 20;
-        boolean includeEdge = false;
+        final boolean includeEdge = false;
         reRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         // reRecyclerView.addItemDecoration(new SpacesItemDecoration(space));
 
@@ -345,6 +397,8 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         home_hot_line_adapter.setOnHomeHotLineClickLister(new Home_Hot_Line_Adapter.OnHomeHotLineAdapterClickLister() {
             @Override
             public void onHomeHotLineAdapterItemClickLister(int position) {
+                // homeBannerPresenter.getHomeCommodity();
+
 
             }
         });
@@ -364,12 +418,10 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         });
 
 
-
-
     }
 
     /**
-     *  首页导航
+     * 首页导航
      */
     @Override
     public void onNavBeanSuccess(NavBean navBean) {
@@ -380,7 +432,7 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         navAdapter = new NavAdapter(getActivity(), results);
         linearRec.setAdapter(navAdapter);
 
-        //点击传值,颜色切换
+        //点击传值,
         navAdapter.setOnNavItemClickLister(new NavAdapter.OnNavItemClickLister() {
             @Override
             public void onNavItemClick(final NavAdapter.ViewHolder holder, final int position) {
@@ -395,7 +447,8 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         Log.d("导航获取失败", "onFailed: " + navMsg);
     }
 
-    /**q
+    /**
+     * q
      * 导航的孩子展示
      */
     @Override
@@ -436,7 +489,17 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
 
         navChildsAdapter = new NavChildsAdapter(getActivity(), result);
         navChildsRec.setAdapter(navChildsAdapter);
-
+        //导航子条目适配器的监听
+//        navChildAdapter.setOnNavChildItemClickLister(new NavChildAdapter.OnNavChildItemClickLister() {
+//            //            点击事件的传id值,并且展示数据
+//            @Override
+//            public void onNavChildItemClick(int position) {
+//                homeAll.setVisibility(View.GONE);
+//                navChildsLinear.setVisibility(View.VISIBLE);
+//                navPresenter.getNavChildsBea(result.get(position).getId());
+//
+//            }
+//        });
 
     }
 
@@ -450,13 +513,56 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
         Log.d("首页数据获取失败", "onFailed: " + t.getMessage());
     }
 
+
+    //    进行获取焦点，点击返回键返回上一级
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getFours();
+    }
+
+//        进行获取焦点
+
+    long exitTime = 0;
+
+    private void getFours() {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    homeAll.setVisibility(View.VISIBLE);
+                    navChildsLinear.setVisibility(View.GONE);
+                    if ((System.currentTimeMillis() - exitTime) > 2000) {
+                        Toast.makeText(getActivity(), "再按一次就退出了哟", Toast.LENGTH_SHORT).show();
+                        exitTime = System.currentTimeMillis();
+                    } else {
+                        getActivity().finish();
+                        System.exit(0);
+                      /*  InputMethodManager imm = (InputMethodManager) getActivity()
+                                .getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edSou.getWindowToken(), 0);*/
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }//    进行获取焦点
+
+
+    //    解决内存溢出
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
         homeBannerPresenter.detachView();
         navPresenter.detachView();
-    }
+
+    }//    解决内存溢出
 
 
 }

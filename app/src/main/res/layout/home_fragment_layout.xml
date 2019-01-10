@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/re_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
 
     >
+    <!--这是搜索框-->
     <RelativeLayout
         android:id="@+id/re_recycler_view_re"
         android:layout_width="match_parent"
@@ -25,9 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:hint="我是搜索框"
+            android:hint="搜索框"
             android:singleLine="true"
             android:textColor="#cccccc"
+            android:focusableInTouchMode="true"
             android:textSize="@dimen/sp_12" />
 
         <ImageView
@@ -54,8 +57,6 @@
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical">
-
-
 
                <!-- <banner android:background="#e1d5d5"-->
                <com.recker.flybanner.FlyBanner
@@ -201,7 +202,7 @@
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
-    <!--展示导航孩子的商品-->
+    <!--首页导航-->
     <LinearLayout
         android:id="@+id/nav_linear"
         android:layout_width="match_parent"
@@ -209,7 +210,7 @@
         android:layout_marginTop="@dimen/dp_40"
         android:visibility="gone"
         android:orientation="vertical">
-        <!--一级导航-->
+        <!--一级-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_43"
@@ -271,6 +272,7 @@
                     />
 
             </LinearLayout>
+            <!--二级rec-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/linear_child_rec"
                 android:layout_width="match_parent"
@@ -282,6 +284,44 @@
             </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <!--热销新品的所有商品-->
+    <LinearLayout
+        android:id="@+id/rxxp_linaer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_50"
+        android:orientation="vertical"
+        >
+
+
+
+
+    </LinearLayout>
+    <!--魔力时尚的所有商品-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_50"
+        android:orientation="vertical"
+        >
+
+
+
+
+    </LinearLayout>
+    <!--品质生活的所有商品-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_50"
+        android:orientation="vertical"
+        >
+
+
+
 
     </LinearLayout>
 

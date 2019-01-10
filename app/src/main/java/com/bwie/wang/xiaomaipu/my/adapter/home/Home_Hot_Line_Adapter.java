@@ -59,13 +59,13 @@ public class Home_Hot_Line_Adapter extends RecyclerView.Adapter<Home_Hot_Line_Ad
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onHomeHotLineClickLister!=null){
+                /* if (onHomeHotLineClickLister!=null){
                     onHomeHotLineClickLister.onHomeHotLineAdapterItemClickLister(position);
-                }
-                /*Intent intent = new Intent(context,InfoActivity.class);
-                int id = rxxpList.get(position).getCommodityId();
-                intent.putExtra("id",id);
-                context.startActivity(intent);*/
+                }*/
+                Intent intent = new Intent(context,InfoActivity.class);
+                int commodityId = rxxpList.get(position).getCommodityId();
+                intent.putExtra("commodityId",commodityId);
+                context.startActivity(intent);
             }
         });
 

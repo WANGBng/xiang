@@ -1,6 +1,7 @@
 package com.bwie.wang.xiaomaipu.my.adapter.home.nav;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.bwie.wang.xiaomaipu.R;
 import com.bwie.wang.xiaomaipu.mvp.presenter.home.NavChildsBean;
+import com.bwie.wang.xiaomaipu.my.activity.details.InfoActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
@@ -34,13 +36,22 @@ public class NavChildsAdapter extends RecyclerView.Adapter<NavChildsAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         NavChildsBean.ResultBean resultBean = childLists.get(position);
         holder.nav_simple.setImageURI(resultBean.getMasterPic());
 
         holder.nav_title.setText(resultBean.getCommodityName());
         holder.nav_price.setText(String.valueOf(resultBean.getPrice()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,InfoActivity.class);
+                int commodityId = childLists.get(position).getCommodityId();
+                intent.putExtra("commodityId",commodityId);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -61,16 +62,16 @@ public class Home_Quality_Line_Adapter extends RecyclerView.Adapter<Home_Quality
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+/*
                 if (onHomeQualityLineAdapterClickLister != null){
                     onHomeQualityLineAdapterClickLister.onHome_Quality_Line_AdapterItemClickLister(position);
-                }
+                }*/
 
 
-//                Intent intent = new Intent(context,InfoActivity.class);
-//                int commodityId = pzshList.get(position).getCommodityId();
-//                intent.putExtra("pid",commodityId);
-//                context.startActivity(intent);
+                Intent intent = new Intent(context,InfoActivity.class);
+                int commodityId = pzshList.get(position).getCommodityId();
+                intent.putExtra("commodityId",commodityId);
+                context.startActivity(intent);
 
             }
         });

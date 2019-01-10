@@ -65,6 +65,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.ViewHolder> {
                     holder.nav_name.setTextColor(Color.WHITE);
                     isCheck =true;
                 }*/
+                
             }
         });
 

@@ -1,4 +1,4 @@
-package com.bwie.wang.xiaomaipu.my.fragment.tab;
+package com.bwie.wang.xiaomaipu.my.fragment.infotab;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +12,8 @@ import android.view.ViewGroup;
  *
  * @author 王丙均
  */
-//详情页面
-public class DetailsFragment extends Fragment{
+//评价页面
+public class EvaluateFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

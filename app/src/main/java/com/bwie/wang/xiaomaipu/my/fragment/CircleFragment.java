@@ -1,18 +1,22 @@
 package com.bwie.wang.xiaomaipu.my.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
 import com.bwie.wang.xiaomaipu.mvp.presenter.circle.CirclePresenter;
 import com.bwie.wang.xiaomaipu.mvp.view.circle.CircleView;
+import com.bwie.wang.xiaomaipu.my.activity.MainActivity;
 import com.bwie.wang.xiaomaipu.my.adapter.circle.CircleAdapter;
 import com.bwie.wang.xiaomaipu.my.bean.circle.CircleBean;
 
@@ -82,6 +86,42 @@ public class CircleFragment extends Fragment implements CircleView {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getFours();
+
+    }
+    //    进行获取焦点
+    long exitTime = 0;
+    private void getFours() {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+                    if ((System.currentTimeMillis() - exitTime) > 2000){
+                       /* Toast.makeText(getActivity(),"再按一次就退出了哟",Toast.LENGTH_SHORT).show();
+                        exitTime = System.currentTimeMillis();*/
+                       startActivity(new Intent(getActivity(), MainActivity.class));
+                    }else {
+                        getActivity().finish();
+                        System.exit(0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }//    进行获取焦点
+
+
+
+
+
+
     /**
      * 防止内存泄漏,造成手机的内存消耗过大
      */
@@ -96,6 +136,5 @@ public class CircleFragment extends Fragment implements CircleView {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-
     }
 }

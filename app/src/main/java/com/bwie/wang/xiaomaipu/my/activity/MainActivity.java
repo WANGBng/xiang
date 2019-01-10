@@ -62,7 +62,12 @@ public class MainActivity extends AppCompatActivity {
         alphaTabsIndicator.getTabView(2);
         alphaTabsIndicator.getTabView(3);
         alphaTabsIndicator.getTabView(4);
+
+
+
+
     }
+
     //自定义适配器
     class MainAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
         List<Fragment> fragments = new ArrayList<>();

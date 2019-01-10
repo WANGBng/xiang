@@ -1,12 +1,17 @@
 package com.bwie.wang.xiaomaipu.my.activity.details;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
+import com.bwie.wang.xiaomaipu.my.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,13 +19,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
+ * 详情页面
  * @author wangbingjun
  */
 public class InfoActivity extends AppCompatActivity {
 
-    Unbinder unbinder;
     @BindView(R.id.all_back)
     ImageView allBack;
+    Unbinder unbinder;
     private TabLayout tab;
     private ViewPager pager;
 
@@ -45,13 +51,9 @@ public class InfoActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
     }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-      /*  if (allBack){
-            getActionBar().setTitle(R.string.connect_to_internet);
-        }*/
+//  点击返回按钮,销毁当前视图,返回上一级目录
+    @OnClick(R.id.all_back)
+    public void onViewClicked() {
+        finish();
     }
 }

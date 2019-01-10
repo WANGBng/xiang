@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
 import com.bwie.wang.xiaomaipu.mvp.presenter.circle.CirclePresenter;
@@ -40,6 +40,8 @@ public class CircleFragment extends Fragment implements CircleView {
     CircleAdapter circle_Adapter;
     @BindView(R.id.circe_rec)
     RecyclerView circeRec;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -78,11 +80,18 @@ public class CircleFragment extends Fragment implements CircleView {
         circle_Adapter = new CircleAdapter(getActivity(), result);
         circeRec.setAdapter(circle_Adapter);
         circle_Adapter.notifyDataSetChanged();
+//        circeRec.set
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                加载没有完成,明天继续
+            }
+        });
     }
 
     @Override
     public void OnCircleFailed(Throwable throwable) {
-        Log.d("圈子数据获取失败", "onFailed: "+throwable.getMessage());
+        Log.d("圈子数据获取失败", "onFailed: " + throwable.getMessage());
 
     }
 
@@ -93,18 +102,20 @@ public class CircleFragment extends Fragment implements CircleView {
         getFours();
 
     }
+
     //    进行获取焦点
     long exitTime = 0;
+
     private void getFours() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-                    if ((System.currentTimeMillis() - exitTime) > 2000){
-                       startActivity(new Intent(getActivity(), MainActivity.class));
-                    }else {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if ((System.currentTimeMillis() - exitTime) > 2000) {
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                    } else {
                         getActivity().finish();
                         System.exit(0);
                     }
@@ -114,11 +125,6 @@ public class CircleFragment extends Fragment implements CircleView {
             }
         });
     }//    进行获取焦点
-
-
-
-
-
 
     /**
      * 防止内存泄漏,造成手机的内存消耗过大

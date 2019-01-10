@@ -135,8 +135,6 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
                     if ((System.currentTimeMillis() - exitTime) > 2000){
-                       /* Toast.makeText(getActivity(),"再按一次就退出了哟",Toast.LENGTH_SHORT).show();
-                        exitTime = System.currentTimeMillis();*/
                         startActivity(new Intent(getActivity(), MainActivity.class));
                     }else {
                         getActivity().finish();

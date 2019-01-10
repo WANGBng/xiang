@@ -541,9 +541,7 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
                     } else {
                         getActivity().finish();
                         System.exit(0);
-                      /*  InputMethodManager imm = (InputMethodManager) getActivity()
-                                .getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(edSou.getWindowToken(), 0);*/
+
                     }
                     return true;
                 }

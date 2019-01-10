@@ -37,6 +37,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //简单的网络连接需要
+    //关于没有网络进行通知
+    implementation 'com.google.guava:guava:16.0.1'
+
+
     //banner
     implementation 'com.recker.flybanner:flybanner:1.3'
     implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'

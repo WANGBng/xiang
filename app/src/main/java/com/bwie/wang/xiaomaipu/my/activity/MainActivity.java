@@ -1,13 +1,21 @@
 package com.bwie.wang.xiaomaipu.my.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
 import com.bwie.wang.xiaomaipu.my.fragment.CartFragment;
@@ -24,13 +32,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**fragment切换页面
+/**
+ * fragment切换页面
+ *
  * @author wangbingjun
  * @date 2018/12/29
  */
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     Unbinder unbinder;
 
     private final int ITEM_ONE = 0;
@@ -41,17 +50,60 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.alphaIndicator)
     AlphaTabsIndicator alphaTabsIndicator;
 
+
+    public static final String TAGMainActivity = MainActivity.class.getSimpleName();
+    private static final int CODE_UPDATE_UI = 1;
+    private String spec = "https://suggest.taobao.com/sug?code=utf-8&q=%E6%89%8B%E6%9C%BA";
+    private ListView listView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //全屏沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         unbinder = ButterKnife.bind(this);
+
+
+
+        boolean netIsConnection = isNetConnection();
+        if (netIsConnection) {
+            // 获取网络数据
+            getDataFromServer();
+        } else {
+            // 弹出对话框
+            new AlertDialog
+                    .Builder(this)
+                    .setTitle("提示！")
+                    .setMessage("网络未连接，是否打开网络")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        }
+    }
+
+
+    private boolean isNetConnection() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        if (networkInfo == null) {
+            Toast.makeText(this,"我没网络",Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return networkInfo.isAvailable();
+        }
+    }
+
+    void getDataFromServer() {
         //自定义适配器
         MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mainAdapter);
@@ -62,16 +114,13 @@ public class MainActivity extends AppCompatActivity {
         alphaTabsIndicator.getTabView(2);
         alphaTabsIndicator.getTabView(3);
         alphaTabsIndicator.getTabView(4);
-
-
-
-
     }
-
     //自定义适配器
+
     class MainAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener {
         List<Fragment> fragments = new ArrayList<>();
-        String[] titles={"首页","圈子","购物车","订单","我的"};
+        String[] titles = {"首页", "圈子", "购物车", "订单", "我的"};
+
         public MainAdapter(FragmentManager fm) {
             super(fm);
             fragments.add(HomeFragment.newInstance(titles[0]));

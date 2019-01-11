@@ -19,7 +19,6 @@ public class CircleModel {
      */
     public Observable<CircleBean> getCircleB(){
         Observable<CircleBean> circle = HttpUtils.getInstance().api.getCircle();
-        Log.e("TAG","getCircleB: "+circle);
         return circle;
     }
 }

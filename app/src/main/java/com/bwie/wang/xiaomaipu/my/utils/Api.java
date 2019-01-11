@@ -64,7 +64,9 @@ public interface Api {
 
 //getCircle圈子
 
-    @GET("circle/v1/findCircleList?userId=1010&sessionId=15320748258726&page=1&count=50")
+
+
+    @GET("circle/v1/findCircleList?userId=1010&sessionId=15320748258726&page=1&count=10")
     Observable<CircleBean> getCircle();
 
 //详情

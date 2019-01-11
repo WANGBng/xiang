@@ -30,6 +30,7 @@ import com.bwie.wang.xiaomaipu.mvp.presenter.home.NavChildsBean;
 import com.bwie.wang.xiaomaipu.mvp.presenter.home.NavPresenter;
 import com.bwie.wang.xiaomaipu.mvp.view.home.HomeView;
 import com.bwie.wang.xiaomaipu.mvp.view.home.NavView;
+import com.bwie.wang.xiaomaipu.my.adapter.circle.CircleAdapter;
 import com.bwie.wang.xiaomaipu.my.adapter.home.Home_Hot_Line_Adapter;
 import com.bwie.wang.xiaomaipu.my.adapter.home.Home_Magic_Line_Adapter;
 import com.bwie.wang.xiaomaipu.my.adapter.home.Home_Quality_Line_Adapter;
@@ -40,6 +41,7 @@ import com.bwie.wang.xiaomaipu.my.bean.home.HomeBannerBean;
 import com.bwie.wang.xiaomaipu.my.bean.home.HomeCommodityBean;
 import com.bwie.wang.xiaomaipu.my.bean.home.nav.NavBean;
 import com.bwie.wang.xiaomaipu.my.bean.home.nav.NavChildBean;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.recker.flybanner.FlyBanner;
 
 import java.util.ArrayList;
@@ -119,7 +121,7 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
     LinearLayout homeAll;
     //    导航孩子的孩子的商品的REC
     @BindView(R.id.nav_childs_rec)
-    RecyclerView navChildsRec;
+    XRecyclerView navChildsRec;
     //    导航孩子的孩子的商品的布局
     @BindView(R.id.nav_childs_linear)
     LinearLayout navChildsLinear;
@@ -149,6 +151,7 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
     };//上面是轮播图的handler
 
     boolean isBoolen = true;
+      int page=1;
 
     @Nullable
     @Override
@@ -482,24 +485,31 @@ public class HomeFragment extends Fragment implements HomeView, NavView {
      */
     @Override
     public void onNavChildsBeanSuccess(NavChildsBean navChildsBean) {
-        List<NavChildsBean.ResultBean> result = navChildsBean.getResult();
+        final List<NavChildsBean.ResultBean> result = navChildsBean.getResult();
 
         RecyclerView.LayoutManager gGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         navChildsRec.setLayoutManager(gGridLayoutManager);
 
         navChildsAdapter = new NavChildsAdapter(getActivity(), result);
         navChildsRec.setAdapter(navChildsAdapter);
-        //导航子条目适配器的监听
-//        navChildAdapter.setOnNavChildItemClickLister(new NavChildAdapter.OnNavChildItemClickLister() {
-//            //            点击事件的传id值,并且展示数据
-//            @Override
-//            public void onNavChildItemClick(int position) {
-//                homeAll.setVisibility(View.GONE);
-//                navChildsLinear.setVisibility(View.VISIBLE);
-//                navPresenter.getNavChildsBea(result.get(position).getId());
-//
-//            }
-//        });
+//        刷新
+        navChildsRec.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                page = 1;
+                navChildsAdapter = new NavChildsAdapter(getActivity(), result);
+                navChildsRec.refreshComplete();
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                page++;
+                navChildsAdapter = new NavChildsAdapter(getActivity(), result);
+                navChildsRec.loadMoreComplete();
+
+            }
+        });
 
     }
 

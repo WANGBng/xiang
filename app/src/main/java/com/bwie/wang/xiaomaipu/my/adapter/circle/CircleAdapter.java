@@ -2,6 +2,7 @@ package com.bwie.wang.xiaomaipu.my.adapter.circle;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bwie.wang.xiaomaipu.R;
+import com.bwie.wang.xiaomaipu.mvp.presenter.home.NavChildsBean;
 import com.bwie.wang.xiaomaipu.my.bean.circle.CircleBean;
 import com.bwie.wang.xiaomaipu.my.utils.DateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -24,6 +26,7 @@ import java.util.List;
 public class CircleAdapter extends RecyclerView.Adapter<CircleAdapter.ViewHolder> {
     private Context context;
     private List<CircleBean.ResultBean> cList;
+
     //自定义点击事件
     public interface OnPraClickListener {
         void onPraClickListener(int position);

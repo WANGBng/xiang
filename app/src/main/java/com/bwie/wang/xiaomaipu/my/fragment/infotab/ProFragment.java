@@ -17,17 +17,18 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bwie.wang.xiaomaipu.R;
-import com.bwie.wang.xiaomaipu.application.MyScrollView;
-import com.bwie.wang.xiaomaipu.mvp.presenter.home.InfoPresenter;
-import com.bwie.wang.xiaomaipu.mvp.view.InfoView;
-import com.bwie.wang.xiaomaipu.my.activity.details.InfoActivity;
+import com.bwie.wang.xiaomaipu.mvp.presenter.goodslist.GoodsListPresenter;
+import com.bwie.wang.xiaomaipu.mvp.presenter.home.ProFragmentPresenter;
+import com.bwie.wang.xiaomaipu.mvp.view.ProFragmentView;
+import com.bwie.wang.xiaomaipu.mvp.view.goodslist.GoodsListView;
+import com.bwie.wang.xiaomaipu.my.bean.GoodsList.GoodsListBean;
+import com.bwie.wang.xiaomaipu.my.bean.GoodsList.Home_cart_bean;
 import com.bwie.wang.xiaomaipu.my.bean.GoodsList.SyncShoppingBean;
-import com.bwie.wang.xiaomaipu.my.bean.home.InfoBean;
+import com.bwie.wang.xiaomaipu.my.bean.home.ProFragmentBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.recker.flybanner.FlyBanner;
 
@@ -42,11 +43,10 @@ import butterknife.Unbinder;
 
 /**
  * date:2019/1/3.
- *
+ *商品简介页面
  * @author 王丙均
  */
-//商品页面
-public class ProFragment extends Fragment implements InfoView {
+public class ProFragment extends Fragment implements ProFragmentView,GoodsListView {
     View view;
     @BindView(R.id.info_simple)
     FlyBanner infoSimple;
@@ -59,8 +59,7 @@ public class ProFragment extends Fragment implements InfoView {
     /* */
     @BindView(R.id.pro_tit)
     TextView proTit;
-    /* @BindView(R.id.pro_details)
-     SimpleDraweeView proDetails;*/
+
     @BindView(R.id.pro_ti)
     TextView proTi;
     @BindView(R.id.js_simple)
@@ -82,12 +81,17 @@ public class ProFragment extends Fragment implements InfoView {
 
     private List<String> images = new ArrayList<>();
 
+    List<Home_cart_bean> home_cart_beans ;
+
+
     Unbinder unbinder;
 
-    InfoPresenter infoPresenter;
+    ProFragmentPresenter proFragmentPresenter;
+    GoodsListPresenter goodsListPresenter;
+
     WebSettings webViewSettings;
-    private ScrollView scroll_view;
-    MyScrollView myScrollView;
+    int commodityId;
+    int count=1;
     private int h;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -111,13 +115,7 @@ public class ProFragment extends Fragment implements InfoView {
             }
         }
     }; //上面是轮播图的handler
-    private Runnable runnable = new Runnable() {
 
-        @Override
-        public void run() {
-            scroll_view.scrollTo(0, 300);// 改变滚动条的位置
-        }
-    };
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
@@ -133,29 +131,29 @@ public class ProFragment extends Fragment implements InfoView {
         unbinder = ButterKnife.bind(this, view);
 
 //        获取详情的Presenter层
-        infoPresenter = new InfoPresenter();
-        infoPresenter.attachView(this);
+        proFragmentPresenter = new ProFragmentPresenter();
+        proFragmentPresenter.attachView(this);
+//      这是同步的P层
+        goodsListPresenter = new GoodsListPresenter();
 
 //      接受传值
         Intent intent = getActivity().getIntent();
-        int commodityId = intent.getIntExtra("commodityId", 6);
+
+        commodityId = intent.getIntExtra("commodityId", 6);
 //        加载传值
-        infoPresenter.loadData(commodityId);
+        proFragmentPresenter.loadData(commodityId);
 //       handler刷新,用于轮播图
         handler.sendEmptyMessageDelayed(0, 1000);
 
-        initView(view);
 
 
         return view;
     }
-    private void initView(View view) {
-        scroll_view = (ScrollView) view.findViewById(R.id.scroll_view);
-    }
+
 
     @Override
-    public void OnSuccess(InfoBean infoBean) {
-        InfoBean.ResultBean result = infoBean.getResult();
+    public void OnSuccess(final ProFragmentBean proFragmentBean) {
+        final ProFragmentBean.ResultBean result = proFragmentBean.getResult();
 
         String[] s = result.getPicture().split("\\,");
 
@@ -182,6 +180,7 @@ public class ProFragment extends Fragment implements InfoView {
                 return true;
             }
         });
+
     }
 
 
@@ -195,18 +194,35 @@ public class ProFragment extends Fragment implements InfoView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.inf_simple:
-/*
-
-                Intent intent = new Intent(getActivity(),InfoActivity.class);
-                int commodityId = rxxpList.get(position).getCommodityId();
-                intent.putExtra("commodityId",commodityId);
-                startActivity(intent);
-*/
 
 
-                Toast.makeText(getActivity(),"加购成功",Toast.LENGTH_SHORT).show();
+               /* Map<String,String> map = new HashMap<>();
+//                map.put()
+                home_cart_beans = new ArrayList<>();
+
+                Home_cart_bean home_cart_bean = new Home_cart_bean();
+                home_cart_bean.setCommodityId(commodityId);
+                home_cart_bean.setCount(count);
+
+
+                home_cart_beans.add(home_cart_bean);
+
+                Gson gson = new Gson();
+                String s = gson.toJson(home_cart_beans);
+
+                map.put("data",s);*/
+
+//                infoPresenter.loadData();
+           //     goodsListPresenter.getGoodsListModel(commodityId);
+
+
+                SyncShoppingBean syncShoppingBean = new SyncShoppingBean();
+                String message = syncShoppingBean.getMessage();
+
+                Toast.makeText(getActivity(),""+message,Toast.LENGTH_SHORT).show();
                 break;
             case R.id.in_simple:
+
                 break;
             default:
                 break;
@@ -219,7 +235,26 @@ public class ProFragment extends Fragment implements InfoView {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        infoPresenter.detachView();
+        proFragmentPresenter.detachView();
     }
 
+    @Override
+    public void OnGoodsListSuccess(GoodsListBean goodsListBean) {
+
+    }
+
+    @Override
+    public void OnGoodsListFailed(String msg) {
+
+    }
+
+    @Override
+    public void OnSyncShoppingBeanSuccess(SyncShoppingBean syncShoppingBean) {
+
+    }
+
+    @Override
+    public void OnSyncShoppingBeanFailed(String msg) {
+
+    }
 }

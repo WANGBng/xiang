@@ -1,4 +1,4 @@
-package com.bwie.wang.xiaomaipu.my.activity.login_register;
+package com.bwie.wang.xiaomaipu.my.activity.loginregister;
 
 /**
  * date:2018/12/29.

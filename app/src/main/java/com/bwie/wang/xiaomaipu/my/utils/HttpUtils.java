@@ -38,7 +38,10 @@ public class HttpUtils {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            Request.Builder builder = request.newBuilder().addHeader("userId", "sessionId");
+            Request.Builder builder = request.newBuilder()
+                    .header("userId", "userId")
+                    .header("sessionId", "sessionId")
+                    .addHeader("source", "android");
             Log.e(TAG, "intercept: "+request );
             Response proceed = chain.proceed(request);
             return proceed;

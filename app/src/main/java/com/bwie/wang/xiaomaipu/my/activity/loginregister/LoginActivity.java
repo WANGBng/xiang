@@ -1,4 +1,4 @@
-package com.bwie.wang.xiaomaipu.my.activity.login_register;
+package com.bwie.wang.xiaomaipu.my.activity.loginregister;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +36,6 @@ import butterknife.Unbinder;
  * @author wangbingjun
  * @date 2018/12/29
  */
-
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @BindView(R.id.phone)
@@ -72,8 +71,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     }
 
-
-
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void message(EventBusMassage eventBusMassage){
         loginPhone.setText(eventBusMassage.phone);
@@ -88,7 +85,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 if (loginCheck.isChecked()) {
                     System.out.println("记住密码已选中");
                     sp.edit().putBoolean("ISCHECK", true).commit();
-
                 } else {
                     System.out.println("记住密码没有选中");
                     sp.edit().putBoolean("ISCHECK", false).commit();
@@ -99,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 Toast.makeText(this,"前往注册",Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent1);
+
                 break;
             case R.id.login_bt:
                 //点击登录按钮进行验证是否不为空
@@ -134,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 break;
         }
     }
+//  登陆成功的
 
     @Override
     public void onLoginSuccess(LoginBean loginBean) {
@@ -165,25 +163,18 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void onLoginFailed(String msg) {
-
-    }
-
+    public void onLoginFailed(String msg) {}
     @Override
-    public void onRegisterSuccess(RegisterBean registerBean) {
-
-    }
-
+    public void onRegisterSuccess(RegisterBean registerBean) {}
     @Override
-    public void onRegisterFailed(String msg) {
-
-    }
-
+    public void onRegisterFailed(String msg) {}
 //    解决内存泄漏或溢出
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
         loginPresenter.detachView();
+//        EventBus的解决
+        EventBus.getDefault().unregister(this);
     }
 }

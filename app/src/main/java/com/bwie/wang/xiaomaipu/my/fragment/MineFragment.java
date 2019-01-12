@@ -93,7 +93,6 @@ public class MineFragment extends Fragment {
         switch (view.getId()) {
             case R.id.personal_data:
 //              跳转到个人资料
-
                 setMyDataActivity();
                 break;
             case R.id.layput_person_da:

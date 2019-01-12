@@ -3,8 +3,8 @@ package com.bwie.wang.xiaomaipu.mvp.presenter.home;
 import android.util.Log;
 
 import com.bwie.wang.xiaomaipu.base.BasePresenter;
-import com.bwie.wang.xiaomaipu.mvp.view.InfoView;
-import com.bwie.wang.xiaomaipu.my.bean.home.InfoBean;
+import com.bwie.wang.xiaomaipu.mvp.view.ProFragmentView;
+import com.bwie.wang.xiaomaipu.my.bean.home.ProFragmentBean;
 import com.bwie.wang.xiaomaipu.my.utils.HttpUtils;
 
 import io.reactivex.Observer;
@@ -18,29 +18,30 @@ import io.reactivex.schedulers.Schedulers;
  * @author 王丙均
  */
 
-public class InfoPresenter extends BasePresenter<InfoView>{
+public class ProFragmentPresenter extends BasePresenter<ProFragmentView>{
     public void loadData(int commodityId){
         HttpUtils.getInstance().api.queryGoodsByPid(commodityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<InfoBean>() {
+                .subscribe(new Observer<ProFragmentBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
                     @Override
-                    public void onNext(InfoBean infoBean) {
-                        if (infoBean!=null){
+                    public void onNext(ProFragmentBean proFragmentBean) {
+                        if (proFragmentBean!=null){
                             try {
-                                getView().OnSuccess(infoBean);
+                                getView().OnSuccess(proFragmentBean);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }else {
-                            Log.e("TAG", "onNext: "+infoBean.toString().length() );
+                            Log.e("TAG", "onNext: "+proFragmentBean.toString().length() );
                         }
                     }
                     @Override
                     public void onError(Throwable e) {
+                        getView().OnFailed(e.getMessage());
                     }
                     @Override
                     public void onComplete() {

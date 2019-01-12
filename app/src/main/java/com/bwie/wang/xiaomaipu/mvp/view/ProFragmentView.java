@@ -1,10 +1,7 @@
 package com.bwie.wang.xiaomaipu.mvp.view;
 
 import com.bwie.wang.xiaomaipu.base.BaseView;
-import com.bwie.wang.xiaomaipu.my.bean.GoodsList.SyncShoppingBean;
-import com.bwie.wang.xiaomaipu.my.bean.home.InfoBean;
-
-import java.io.IOException;
+import com.bwie.wang.xiaomaipu.my.bean.home.ProFragmentBean;
 
 /**
  * date:2019/1/2.
@@ -12,8 +9,8 @@ import java.io.IOException;
  * @author 王丙均
  */
 
-public interface InfoView extends BaseView {
-    void OnSuccess(InfoBean infoBean);
+public interface ProFragmentView extends BaseView {
+    void OnSuccess(ProFragmentBean proFragmentBean);
     void OnFailed(String msg);
 //    void OnSyncShoppingBeanSuccess(SyncShoppingBean syncShoppingBean);
 //    void OnSyncShoppingBeanFailed(String msg);

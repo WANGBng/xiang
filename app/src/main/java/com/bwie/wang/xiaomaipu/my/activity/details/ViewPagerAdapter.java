@@ -19,7 +19,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
-
     }
 
     @Override
@@ -46,4 +45,3 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return menus.length;
     }
 }
-

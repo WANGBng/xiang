@@ -96,8 +96,6 @@ public class CircleFragment extends Fragment implements CircleView {
                 page = 1;
                 circle_Adapter = new CircleAdapter(getActivity(), result);
                 circeRec.refreshComplete();
-
-
             }
 
             @Override
@@ -105,7 +103,6 @@ public class CircleFragment extends Fragment implements CircleView {
                 page++;
                 circle_Adapter = new CircleAdapter(getActivity(), result);
                 circeRec.loadMoreComplete();
-
             }
         });
 

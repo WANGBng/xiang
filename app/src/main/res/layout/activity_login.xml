@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
 
     android:background="@mipmap/loge_rec_bag_hdpi"
-    tools:context="com.bwie.wang.xiaomaipu.my.activity.login_register.LoginActivity">
+    tools:context="com.bwie.wang.xiaomaipu.my.activity.loginregister.LoginActivity">
 
     <ImageView
         android:id="@+id/phone"

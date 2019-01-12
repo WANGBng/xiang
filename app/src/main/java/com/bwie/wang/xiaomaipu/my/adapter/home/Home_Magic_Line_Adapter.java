@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bwie.wang.xiaomaipu.R;
-import com.bwie.wang.xiaomaipu.my.activity.details.InfoActivity;
 import com.bwie.wang.xiaomaipu.my.bean.home.HomeCommodityBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 

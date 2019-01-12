@@ -27,11 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".my.activity.login_register.LoginActivity" >
+        <activity android:name=".my.activity.loginregister.LoginActivity" >
 
         </activity>
-        <activity android:name=".my.activity.login_register.RegisterActivity" />
-        <activity android:name=".my.activity.details.InfoActivity" />
+        <activity android:name=".my.activity.loginregister.RegisterActivity" />
         <activity android:name=".my.activity.mine.My_DataActivity" />
         <activity android:name=".my.activity.mine.My_CircleActivity" />
         <activity android:name=".my.activity.mine.My_FootprintsActivity" />

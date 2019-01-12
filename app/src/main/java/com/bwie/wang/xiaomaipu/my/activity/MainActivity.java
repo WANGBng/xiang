@@ -50,12 +50,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.alphaIndicator)
     AlphaTabsIndicator alphaTabsIndicator;
 
-
     public static final String TAGMainActivity = MainActivity.class.getSimpleName();
     private static final int CODE_UPDATE_UI = 1;
     private String spec = "https://suggest.taobao.com/sug?code=utf-8&q=%E6%89%8B%E6%9C%BA";
     private ListView listView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         unbinder = ButterKnife.bind(this);
-
 
 
         boolean netIsConnection = isNetConnection();

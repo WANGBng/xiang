@@ -3,14 +3,12 @@ package com.bwie.wang.xiaomaipu.my.adapter.home.nav;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bwie.wang.xiaomaipu.R;
 import com.bwie.wang.xiaomaipu.mvp.presenter.home.NavChildsBean;
-import com.bwie.wang.xiaomaipu.my.activity.details.InfoActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;

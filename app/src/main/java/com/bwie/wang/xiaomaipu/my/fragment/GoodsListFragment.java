@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.bwie.wang.xiaomaipu.my.activity.MainActivity;
 import com.bwie.wang.xiaomaipu.my.adapter.goods.GoodsListAdapter;
 import com.bwie.wang.xiaomaipu.my.bean.GoodsList.GoodsListBean;
 import com.bwie.wang.xiaomaipu.my.bean.GoodsList.SyncShoppingBean;
+import com.bwie.wang.xiaomaipu.my.fragment.adddecrease.AddDecreaseView;
 
 import java.util.List;
 
@@ -37,6 +39,8 @@ import butterknife.Unbinder;
  */
 
 public class GoodsListFragment extends Fragment implements GoodsListView{
+
+
     public static final String BUNDLE_TITLE = "title";
     View view;
     @BindView(R.id.shoppingfragment_cartrecycler)
@@ -48,6 +52,7 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
     @BindView(R.id.shoppingfragment_button)
     Button shoppingfragmentButton;
     Unbinder unbinder;
+
     GoodsListPresenter goodsListPresenter;
     GoodsListAdapter goodsListAdapter;
     @Nullable
@@ -60,13 +65,16 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
         if (parent != null) {
             parent.removeView(view);
         }
+        unbinder = ButterKnife.bind(this, view);
         goodsListPresenter = new GoodsListPresenter();
         goodsListPresenter.attachView(this);
-        goodsListPresenter.getGoodsListModel();
 
+        int commodityId = getActivity().getIntent().getIntExtra("commodityId", 13);
+        goodsListPresenter.getGoodsListModel();
+        Log.d("commodityId", "commodityId: "+commodityId);
 
 //        goodsListPresenter.getGoodsListModel(userId,1,"sessionId","1547119469374299");
-        unbinder = ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -76,6 +84,7 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
             case R.id.shoppingfragment_checkbox:
                 break;
             case R.id.shoppingfragment_button:
+                Toast.makeText(getActivity(), "主人您来啦!小多好想你", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -93,22 +102,26 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
 
     @Override
     public void OnGoodsListSuccess(GoodsListBean goodsListBean) {
-        List<GoodsListBean.ResultBean> result = goodsListBean.getResult();
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        shoppingfragmentCartrecycler.setLayoutManager(layoutManager);
-        goodsListAdapter = new GoodsListAdapter(getActivity(),result);
-        shoppingfragmentCartrecycler.setAdapter(goodsListAdapter);
+//        List<GoodsListBean.ResultBean> result = goodsListBean.getResult();
+//        Log.d("OnGoodsListSuccess", "OnGoodsListSuccess: "+result.size());
 
-    }
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+//
+//
+//        shoppingfragmentCartrecycler.setLayoutManager(layoutManager);
+//
+//        goodsListAdapter = new GoodsListAdapter(getActivity(),result);
+//
+//        shoppingfragmentCartrecycler.setAdapter(goodsListAdapter);
 
-    @Override
-    public void OnGoodsListFailed(String msg) {
 
     }
 
     @Override
     public void OnSyncShoppingBeanSuccess(SyncShoppingBean syncShoppingBean) {
+//        String message = syncShoppingBean.getMessage();
+
 
     }
 
@@ -116,6 +129,11 @@ public class GoodsListFragment extends Fragment implements GoodsListView{
     public void OnSyncShoppingBeanFailed(String msg) {
 
     }
+    @Override
+    public void OnGoodsListFailed(String msg) {
+
+    }
+
 
     //    进行获取焦点，点击返回键返回上一级
     @Override

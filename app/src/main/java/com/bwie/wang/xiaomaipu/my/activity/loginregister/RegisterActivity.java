@@ -1,4 +1,4 @@
-package com.bwie.wang.xiaomaipu.my.activity.login_register;
+package com.bwie.wang.xiaomaipu.my.activity.loginregister;
 
 import android.content.Intent;
 import android.os.Bundle;

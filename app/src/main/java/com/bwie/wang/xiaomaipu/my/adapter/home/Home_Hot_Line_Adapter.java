@@ -1,7 +1,6 @@
 package com.bwie.wang.xiaomaipu.my.adapter.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bwie.wang.xiaomaipu.R;
-import com.bwie.wang.xiaomaipu.my.activity.details.InfoActivity;
 import com.bwie.wang.xiaomaipu.my.bean.home.HomeCommodityBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -59,13 +57,15 @@ public class Home_Hot_Line_Adapter extends RecyclerView.Adapter<Home_Hot_Line_Ad
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* if (onHomeHotLineClickLister!=null){
+                 if (onHomeHotLineClickLister!=null){
                     onHomeHotLineClickLister.onHomeHotLineAdapterItemClickLister(position);
-                }*/
-                Intent intent = new Intent(context,InfoActivity.class);
+                }
+                /*Intent intent = new Intent(context,InfoActivity.class);
                 int commodityId = rxxpList.get(position).getCommodityId();
                 intent.putExtra("commodityId",commodityId);
-                context.startActivity(intent);
+                context.startActivity(intent);*/
+
+
             }
         });
 
